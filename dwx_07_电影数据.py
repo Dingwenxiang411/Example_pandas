@@ -40,19 +40,26 @@ max_rating = rating_data.max()
 min_rating = rating_data.min()
 # 计算组数
 num_bin = (max_runtime - min_runtime)//5
-num_bin1 = (max_rating - min_rating)//0.5
+# 设置不等宽的组距，hist方法取到的会是一个左闭右开的区间[1.9,3.5)
+num_bin1 = [1.9, 3.5]
+i = 3.5
+while i <= max_rating:
+    i += 0.5
+    num_bin1.append(i)
 # 设置图形的大小
 plt.figure(figsize=(20, 8), dpi=80)
-# 绘制网格
-plt.grid()
+
 # 分割绘图区域
-# plt.subplot(2, 1, 1)
+plt.subplot(2, 1, 1)
 plt.hist(runtime_data, num_bin)
 # 绘制x轴
 plt.xticks(range(min_runtime, max_runtime+5, 5))
+# 绘制网格
+plt.grid()
 # # 分割绘图区域
-# plt.subplot(2, 1, 2)
-# plt.hist(rating_data, num_bin1)
+plt.subplot(2, 1, 2)
+plt.hist(rating_data, num_bin1)
 # # TODO 绘制x轴，坐标轴不能识别0.5的精度
-# plt.xticks(range(min_rating, max_rating+0.5, 0.5))
-# plt.show()
+plt.xticks(range(len(num_bin1)), num_bin1)
+plt.grid()
+plt.show()
